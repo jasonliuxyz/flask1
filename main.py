@@ -5,18 +5,10 @@ app = Flask(__name__)
 
 RSS_FEED = {'zhihu':"https://www.zhihu.com/rss", "netease":"http://news.163.com/special/00011K6L/rss_newsattitude.xml"}
 
-#将/zhihu url路由映射到zhihu()，然后调用get_news(args)
+#将URL中部分标记为变量，作为关键字参数传递给函数
 @app.route('/')
-@app.route('/zhihu')
-def zhihu():
-	return get_news('zhihu')
-
-@app.route('/netease')
-def netease():
-	return get_news('netease')
-  
-
-def get_news(publication):
+@app.route('/<publication>')
+def get_news(publication='zhihu'): # 注意这里一定要有默认参数
 	# 通过feedparser获取RSS消息
 	feed = feedparser.parse(RSS_FEED[publication])
 	first_content = feed['entries'][0]  
