@@ -13,7 +13,8 @@ def get_news(publication='zhihu'): # 注意这里一定要有默认参数
 	feed = feedparser.parse(RSS_FEED[publication])
 	first_content = feed['entries'][0]  
 
-	return render_template('home.html', title=first_content.get('title'), published=first_content.get('published'), summary=first_content.get('summary'))	
+	# 将first_content已键值对形式传递给模板
+	return render_template('home.html', article=first_content)	
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=80, debug=True)
