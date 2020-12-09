@@ -5,11 +5,11 @@ app = Flask(__name__)
 
 RSS_FEED = {'zhihu':"https://www.zhihu.com/rss", "netease":"http://news.163.com/special/00011K6L/rss_newsattitude.xml"}
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def get_news():
 
-	# 使用request从form表单中获取用户提交的数据
-	query = request.args.get("publication")
+	# 使用request从form表单中获取用户POST提交的数据
+	query = request.form.get("publication")
 	if not query or query.lower() not in RSS_FEED:
 		publication = 'zhihu'
 	else:

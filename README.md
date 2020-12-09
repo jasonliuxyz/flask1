@@ -33,4 +33,15 @@ tag 7.0
 通过模板循环显示所有文章
 jinja2模板的循环语法
 
+---------------
+tag 8.0
+支持用户输入的方式获取headlines
+使用get方法，
+debug输出："GET /?publication=netease HTTP/1.1" 200 -
+
+----------------
+tag 9.0
+支持用户输入的方式获取headlines
+使用post方法
+debug输出："POST / HTTP/1.1" 200 -
 
