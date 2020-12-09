@@ -11,10 +11,10 @@ RSS_FEED = {'zhihu':"https://www.zhihu.com/rss", "netease":"http://news.163.com/
 def get_news(publication='zhihu'): # 注意这里一定要有默认参数
 	# 通过feedparser获取RSS消息
 	feed = feedparser.parse(RSS_FEED[publication])
-	first_content = feed['entries'][0]  
+	first_content = feed['entries'] 
 
 	# 将first_content已键值对形式传递给模板
-	return render_template('home.html', article=first_content)	
+	return render_template('home.html', articles=first_content)	
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=80, debug=True)
