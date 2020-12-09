@@ -3,13 +3,22 @@ import feedparser
 
 app = Flask(__name__)
 
-ZHIHU_FEED = "https://www.zhihu.com/rss"
+RSS_FEED = {'zhihu':"https://www.zhihu.com/rss", "netease":"http://news.163.com/special/00011K6L/rss_newsattitude.xml"}
 
-#将默认/页面路由映射到get_news函数
-@app.route('/')  
-def get_news():
+#将/zhihu url路由映射到zhihu()，然后调用get_news(args)
+@app.route('/')
+@app.route('/zhihu')
+def zhihu():
+	return get_news('zhihu')
+
+@app.route('/netease')
+def netease():
+	return get_news('netease')
+  
+
+def get_news(publication):
 	# 通过feedparser获取RSS消息
-	feed = feedparser.parse(ZHIHU_FEED)
+	feed = feedparser.parse(RSS_FEED[publication])
 	first_content = feed['entries'][0]  
 	
 	# 返回模板字符串
