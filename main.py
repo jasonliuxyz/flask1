@@ -1,18 +1,25 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import feedparser
 
 app = Flask(__name__)
 
 RSS_FEED = {'zhihu':"https://www.zhihu.com/rss", "netease":"http://news.163.com/special/00011K6L/rss_newsattitude.xml"}
 
-#将URL中部分标记为变量，作为关键字参数传递给函数
 @app.route('/')
-@app.route('/<publication>')
-def get_news(publication='zhihu'): # 注意这里一定要有默认参数
+def get_news():
+
+	# 使用request从form表单中获取用户提交的数据
+	query = request.args.get("publication")
+	if not query or query.lower() not in RSS_FEED:
+		publication = 'zhihu'
+	else:
+		publication = query.lower()
+
 	# 通过feedparser获取RSS消息
 	feed = feedparser.parse(RSS_FEED[publication])
 	first_content = feed['entries'] 
 
+	
 	# 将first_content已键值对形式传递给模板
 	return render_template('home.html', articles=first_content)	
 
